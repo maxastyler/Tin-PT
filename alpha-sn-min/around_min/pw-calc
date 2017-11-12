@@ -1,0 +1,47 @@
+#!/bin/sh
+
+# run from directory where this script is
+# needs 3 arguments:
+# $./matdyn-calc lat_min lat_step lat_max
+
+cd `echo $0 | sed 's/\(.*\)\/.*/\1/'` # extract pathname
+MASTER_DIR=`pwd`
+K_DIM=8
+ECUTWFC=50
+ECUTRHO=`expr 8 \* $ECUTWFC`
+
+for i in `seq $1 $2 $3` ; do
+	echo "On lattice param = $i"
+	mkdir -p sn.alpha.$i
+	cd sn.alpha.$i
+	echo "Calculating for lat_param = $i"
+	#The self-consistent calculation script
+	cat > sn.alpha.scf.$i.in << EOF		
+&control
+	calculation = 'scf',
+	prefix = 'sn.alpha.$i',
+/
+&system
+	ibrav = 2,
+	celldm(1) = $i,
+	nat = 2,
+	ntyp = 1,
+	ecutwfc = $ECUTWFC,
+	ecutrho = $ECUTRHO,
+/
+&electrons
+	mixing_beta = 0.7,
+	conv_thr = 1.0d-8,
+/
+ATOMIC_SPECIES
+ Sn 118.71 sn_pbe_v1.4.uspp.F.UPF
+ATOMIC_POSITIONS
+ Sn 0.00 0.00 0.00
+ Sn 0.25 0.25 0.25
+K_POINTS automatic
+ $K_DIM $K_DIM $K_DIM	1 1 1
+EOF
+	mpirun -np 4 pw.x < sn.alpha.scf.$i.in > sn.alpha.scf.$i.out
+	echo "Finished this one"
+	cd $MASTER_DIR
+done
