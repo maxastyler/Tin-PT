@@ -1,0 +1,37 @@
+&control
+	calculation = 'vc-relax',
+	prefix = 'sn.beta.relax',
+/
+&system
+	ibrav = 0,
+	celldm(1) = 11.23746432,
+	nat = 2,
+	ntyp = 1,
+	ecutwfc = 50,
+	ecutrho = 500,
+	occupations = 'smearing',
+	smearing = 'm-v',
+	degauss = 0.02,
+/
+&electrons
+	conv_thr = 1.0d-8,
+	mixing_beta = 0.7,
+/
+&ions
+	ion_dynamics = 'bfgs',
+/
+&cell
+	cell_dynamics = 'bfgs',
+/
+CELL_PARAMETERS {alat}
+   1.009693216   0.000000000  -0.000000000
+  -0.000000000   1.009693216  -0.000000000
+   0.504846608   0.504846608   0.272360808
+ATOMIC_SPECIES
+   Sn 118.71 sn_pbe_v1.4.uspp.F.UPF
+ATOMIC_POSITIONS crystal
+Sn   0.625000000000000   0.875000000000000   0.750000000000000
+Sn   0.375000000000000   0.125000000000000   0.250000000000000
+K_POINTS automatic
+ 8 8 14  1 1 1
+
