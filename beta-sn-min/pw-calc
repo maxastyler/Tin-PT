@@ -46,11 +46,10 @@ ATOMIC_POSITIONS crystal
 Sn 0.9868368   1.2335474   0.2001097
 Sn 0.4934192   0.2467087   0.0667032
 K_POINTS automatic
-# 8 8 14	1 1 1
-4 4 4 1 1 1
+ 8 8 14	1 1 1
 EOF
 	mpirun -np 4 pw.x < sn.beta.scf.$i.in > sn.beta.scf.$i.out
 	echo "Finished this one"
-	#find -type f -name "*.wfc*" | xargs rm
+	find -type f -name "*.wfc*" | xargs rm
 	cd $MASTER_DIR
 done
