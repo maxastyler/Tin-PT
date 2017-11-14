@@ -1,0 +1,55 @@
+#!/bin/sh
+
+# run from directory where this script is
+# needs 3 arguments:
+# $./matdyn-calc lat_min lat_step lat_max
+
+cd `echo $0 | sed 's/\(.*\)\/.*/\1/'` # extract pathname
+MASTER_DIR=`pwd`
+K_DIM=6
+ECUTWFC=50
+ECUTRHO=500
+
+for i in `seq $1 $2 $3` ; do
+	echo "On lattice param = $i"
+	mkdir -p sn.beta.$i
+	cd sn.beta.$i
+	echo "Calculating for lat_param = $i"
+	#The self-consistent calculation script
+	cat > sn.beta.scf.$i.in << EOF		
+&control
+	calculation = 'scf',
+	prefix = 'sn.beta.$i',
+/
+&system
+	ibrav = 0,
+	celldm(1) = $i,
+	nat = 2,
+	ntyp = 1,
+	ecutwfc = $ECUTWFC,
+	ecutrho = $ECUTRHO,
+	occupations = 'smearing',
+	smearing = 'm-v',
+	degauss = 0.02,
+/
+&electrons
+	mixing_beta = 0.7,
+	conv_thr = 1.0d-8,
+/
+CELL_PARAMETERS {alat}
+   0.986837   0.000000   0.000000 
+   0.000000   0.986837   0.000000 
+   0.493419   0.493419   0.266813 
+ATOMIC_SPECIES
+ Sn 118.71 sn_pbe_v1.4.uspp.F.UPF
+ATOMIC_POSITIONS crystal
+Sn 0.9868368   1.2335474   0.2001097
+Sn 0.4934192   0.2467087   0.0667032
+K_POINTS automatic
+ 10 10 16	1 1 1
+EOF
+	mpirun -np 4 pw.x < sn.beta.scf.$i.in > sn.beta.scf.$i.out
+	echo "Finished this one"
+	find -type f -name "*.wfc*" | xargs rm
+	cd $MASTER_DIR
+done

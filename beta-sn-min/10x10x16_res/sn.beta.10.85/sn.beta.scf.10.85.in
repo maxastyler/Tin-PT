@@ -1,0 +1,30 @@
+&control
+	calculation = 'scf',
+	prefix = 'sn.beta.10.85',
+/
+&system
+	ibrav = 0,
+	celldm(1) = 10.85,
+	nat = 2,
+	ntyp = 1,
+	ecutwfc = 50,
+	ecutrho = 500,
+	occupations = 'smearing',
+	smearing = 'm-v',
+	degauss = 0.02,
+/
+&electrons
+	mixing_beta = 0.7,
+	conv_thr = 1.0d-8,
+/
+CELL_PARAMETERS {alat}
+   0.986837   0.000000   0.000000 
+   0.000000   0.986837   0.000000 
+   0.493419   0.493419   0.266813 
+ATOMIC_SPECIES
+ Sn 118.71 sn_pbe_v1.4.uspp.F.UPF
+ATOMIC_POSITIONS crystal
+Sn 0.9868368   1.2335474   0.2001097
+Sn 0.4934192   0.2467087   0.0667032
+K_POINTS automatic
+ 10 10 16	1 1 1
