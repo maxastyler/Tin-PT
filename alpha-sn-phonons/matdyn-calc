@@ -6,8 +6,8 @@
 
 cd `echo $0 | sed 's/\(.*\)\/.*/\1/'` # extract pathname
 MASTER_DIR=`pwd`
-K_DIM=8
-Q_DIM=6
+K_DIM=10
+Q_DIM=8
 M_DIM=30
 ECUTWFC=50
 ECUTRHO=`expr 8 \* $ECUTWFC`
@@ -44,7 +44,6 @@ K_POINTS automatic
  $K_DIM $K_DIM $K_DIM	1 1 1
 EOF
 	mpirun -np 4 pw.x < sn.alpha.scf.$i.in > sn.alpha.scf.$i.out
-	find -type f -name "*.wfc*" | xargs rm
 	echo "Calculating phonons"
 	cat > sn.alpha.ph.$i.in << EOF
 Alpha Tin Phonon Calculation for Lat_Param=$i
@@ -82,5 +81,6 @@ EOF
 EOF
 	mpirun -np 4 matdyn.x < sn.alpha.matdyn.$i.in > sn.alpha.matdyn.$i.out
 	echo "Finished lat = $i"
+	find -type f -name "*.wfc*" | xargs rm
 	cd $MASTER_DIR
 done
