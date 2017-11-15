@@ -1,0 +1,86 @@
+#!/bin/sh
+
+# run from directory where this script is
+# needs 3 arguments:
+# $./matdyn-calc lat_min lat_step lat_max
+
+cd `echo $0 | sed 's/\(.*\)\/.*/\1/'` # extract pathname
+MASTER_DIR=`pwd`
+K_DIM=8
+Q_DIM=6
+M_DIM=30
+ECUTWFC=50
+ECUTRHO=`expr 8 \* $ECUTWFC`
+
+for i in `seq $1 $2 $3` ; do
+	echo "On lat = $i"
+	mkdir -p sn.alpha.$i
+	cd sn.alpha.$i
+	#The self-consistent calculation script
+	cat > sn.alpha.scf.$i.in << EOF		
+&control
+	calculation = 'scf',
+	prefix = 'sn.alpha.$i',
+	tstress = .true.,
+/
+&system
+	ibrav = 2,
+	celldm(1) = $i,
+	nat = 2,
+	ntyp = 1,
+	ecutwfc = $ECUTWFC,
+	ecutrho = $ECUTRHO,
+/
+&electrons
+	mixing_beta = 0.7,
+	conv_thr = 1.0d-8,
+/
+ATOMIC_SPECIES
+ Sn 118.71 sn_pbe_v1.4.uspp.F.UPF
+ATOMIC_POSITIONS
+ Sn 0.00 0.00 0.00
+ Sn 0.25 0.25 0.25
+K_POINTS automatic
+ $K_DIM $K_DIM $K_DIM	1 1 1
+EOF
+	mpirun -np 4 pw.x < sn.alpha.scf.$i.in > sn.alpha.scf.$i.out
+	find -type f -name "*.wfc*" | xargs rm
+	echo "Calculating phonons"
+	cat > sn.alpha.ph.$i.in << EOF
+Alpha Tin Phonon Calculation for Lat_Param=$i
+&inputph
+	prefix = 'sn.alpha.$i',
+	ldisp = .true.,
+	nq1 = $Q_DIM,
+	nq2 = $Q_DIM,
+	nq3 = $Q_DIM,
+	fildyn = 'sn.alpha.$i.dyn',
+/
+EOF
+	mpirun -np 4 ph.x < sn.alpha.ph.$i.in > sn.alpha.ph.$i.out
+	echo "Done calculating phonons, now calculating force constants"
+	cat > sn.alpha.q2r.$i.in << EOF
+&input
+	fildyn = 'sn.alpha.$i.dyn',
+	zasr = 'simple',
+	flfrc = 'sn.alpha.$Q_DIM$Q_DIM$Q_DIM.$i.fc',
+/
+EOF
+	mpirun -np 4 q2r.x < sn.alpha.q2r.$i.in > sn.alpha.q2r.$i.out
+	echo "Now calculating density of states"
+	cat > sn.alpha.matdyn.$i.in << EOF
+&input
+	asr = 'simple',
+	flfrc = 'sn.alpha.$Q_DIM$Q_DIM$Q_DIM.$i.fc',
+	flfrq = 'sn.alpha.$i.freq',
+	nk1 = $M_DIM,
+	nk2 = $M_DIM,
+	nk3 = $M_DIM,
+	dos = .true.,
+	fldos = 'sn.alpha.$M_DIM$M_DIM$M_DIM.$i.dos',
+/
+EOF
+	mpirun -np 4 matdyn.x < sn.alpha.matdyn.$i.in > sn.alpha.matdyn.$i.out
+	echo "Finished lat = $i"
+	cd $MASTER_DIR
+done
