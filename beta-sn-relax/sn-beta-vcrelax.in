@@ -12,6 +12,9 @@
 	occupations = 'smearing',
 	smearing = 'm-v',
 	degauss = 0.02,
+	nr1 = 80,
+	nr2 = 80,
+	nr3 = 80,
 /
 &electrons
 	conv_thr = 1.0d-8,
@@ -33,5 +36,5 @@ ATOMIC_POSITIONS crystal
 Sn   0.625000000000000   0.875000000000000   0.750000000000000
 Sn   0.375000000000000   0.125000000000000   0.250000000000000
 K_POINTS automatic
- 8 8 14  1 1 1
+ 12 12 20  1 1 1
 
