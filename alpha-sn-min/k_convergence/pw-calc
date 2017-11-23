@@ -50,6 +50,6 @@ EOF
 	mpirun -np 4 pw.x < sn.a.scf.$i.$k.in > sn.a.scf.$i.$k.out
 	done;
 	mkdir "$MASTER_DIR/sn.a.$i"
-	cp *.out "$MASTER_DIR/sn.a.$i/"
+	cp *.in *.out "$MASTER_DIR/sn.a.$i/"
 	cd $MASTER_DIR
 done

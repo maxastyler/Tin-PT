@@ -1,0 +1,24 @@
+&control
+	calculation = 'scf',
+	prefix = 'sn.a.12.52.20',
+	tstress = .true.,
+/
+&system
+	ibrav = 2,
+	celldm(1) = 12.52,
+	nat = 2,
+	ntyp = 1,
+	ecutwfc = 50,
+	ecutrho = 400,
+/
+&electrons
+	mixing_beta = 0.7,
+	conv_thr = 1.0d-8,
+/
+ATOMIC_SPECIES
+ Sn 118.71 sn_pbe_v1.4.uspp.F.UPF
+ATOMIC_POSITIONS
+ Sn 0.00 0.00 0.00
+ Sn 0.25 0.25 0.25
+K_POINTS automatic
+ 20 20 20	1 1 1
