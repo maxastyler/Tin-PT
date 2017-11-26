@@ -1,0 +1,10 @@
+&input
+   asr='simple',
+   flfrc='sn.alpha.888.12.56.fc', flfrq='sn.alpha.888.12.56.freq', q_in_band_form=.true.,
+/
+5
+ gG   40	
+ K    10
+ X    40
+ gG    30
+ L    1
