@@ -1,0 +1,6 @@
+&input
+        fildyn = 'sn.alpha.12.56.dyn',
+        zasr = 'simple',
+        flfrc = 'sn.alpha.101010.12.56.fc',
+/
+
