@@ -1,3 +1,5 @@
+Percentage difference is { abs(sim_ph-mat_ph) / sim_ph }
+
 For phonon 1 (0.05, 0.55, -0.85):
  Simulated Phonon(cm^-1)   Matdyn Phonons(cm^-1)    Percentage difference  
          48.9024                  49.7764                   1.79%          
