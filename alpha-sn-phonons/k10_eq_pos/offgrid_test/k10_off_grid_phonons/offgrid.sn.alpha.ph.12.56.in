@@ -1,0 +1,7 @@
+Off Grid Alpha Tin Phonon Calculation for Lat_Param=12.56
+&inputph
+	prefix = 'sn.alpha.12.56',
+	ldisp = .false.,
+	fildyn = 'offgrid.sn.alpha.12.56.dyn',
+/
+0.05 0.55 -0.85
