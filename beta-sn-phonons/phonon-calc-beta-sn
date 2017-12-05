@@ -12,10 +12,10 @@ ECUTRHO=`expr 8 \* $ECUTWFC`
 mkdir -p /scratch/s1333534/sn.beta.phonon/
 cd /scratch/s1333534/sn.beta.phonon/
 #The self-consistent calculation script
-cat > sn.beta.scf.$i.in << EOF		
+cat > sn.beta.scf.in << EOF		
 &control
 	calculation = 'scf',
-	prefix = 'sn.beta.$i',
+	prefix = 'sn.beta',
 	tstress = .true.,
 /
 &system
@@ -48,20 +48,20 @@ ATOMIC_POSITIONS
 K_POINTS automatic
  12 12 20	1 1 1
 EOF
-	mpirun -np 4 pw.x < sn.beta.scf.$i.in > sn.beta.scf.$i.out
-	cat > sn.beta.ph.$i.in << EOF
+	mpirun -np 4 pw.x < sn.beta.scf.in > sn.beta.scf.out
+	cat > sn.beta.ph.in << EOF
 Beta Tin Phonon Calculation for Lat_Param=11.237464
 &inputph
-	prefix = 'sn.beta.$i',
+	prefix = 'sn.beta',
 	ldisp = .true.,
 	nq1 = 12,
 	nq2 = 12,
 	nq3 = 20,
 	startq = 0,
 	lastq = 0,
-	fildyn = 'sn.beta.$i.dyn',
+	fildyn = 'sn.beta.dyn',
 /
 EOF
-	mpirun -np 4 ph.x < sn.beta.ph.$i.in > sn.beta.ph.$i.out
+	mpirun -np 4 ph.x < sn.beta.ph.in > sn.beta.ph.out
 	cp *.in *.out *.dyn* $MASTER_DIR
 	cd $MASTER_DIR
