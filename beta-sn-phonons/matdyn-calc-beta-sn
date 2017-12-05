@@ -1,0 +1,67 @@
+#!/bin/sh
+
+# run from directory where this script is
+# needs 3 arguments:
+# $./matdyn-calc lat_min lat_step lat_max
+
+cd `echo $0 | sed 's/\(.*\)\/.*/\1/'` # extract pathname
+MASTER_DIR=`pwd`
+ECUTWFC=50
+ECUTRHO=`expr 8 \* $ECUTWFC`
+
+mkdir -p /scratch/s1333534/sn.beta.phonon/
+cd /scratch/s1333534/sn.beta.phonon/
+#The self-consistent calculation script
+cat > sn.beta.scf.$i.in << EOF		
+&control
+	calculation = 'scf',
+	prefix = 'sn.beta.$i',
+	tstress = .true.,
+/
+&system
+	ibrav = 0,
+	celldm(1) = 11.237464,
+	nat = 2,
+	ntyp = 1,
+	ecutwfc = $ECUTWFC,
+	ecutrho = $ECUTRHO,
+	occupations = 'smearing',
+	smearing = 'm-v',
+	degauss = 0.02,
+	nr1 = 80,
+	nr2 = 80,
+	nr3 = 80,
+/
+&electrons
+	mixing_beta = 0.7,
+	conv_thr = 1.0d-8,
+/
+CELL_PARAMETERS {alat}
+ 0.987869  -0.000000   0.000000
+ 0.000000   0.987869   0.000000
+ 0.493934   0.493934   0.266434
+ATOMIC_SPECIES
+ Sn 118.71 sn_pbe_v1.4.uspp.F.UPF
+ATOMIC_POSITIONS
+ Sn 0.9878686   1.2348357   0.1998257
+ Sn 0.4939343   0.2469671   0.0666086
+K_POINTS automatic
+ 12 12 20	1 1 1
+EOF
+	mpirun -np 4 pw.x < sn.beta.scf.$i.in > sn.beta.scf.$i.out
+	cat > sn.beta.ph.$i.in << EOF
+Beta Tin Phonon Calculation for Lat_Param=11.237464
+&inputph
+	prefix = 'sn.beta.$i',
+	ldisp = .true.,
+	nq1 = 12,
+	nq2 = 12,
+	nq3 = 20,
+	startq = 0,
+	lastq = 0,
+	fildyn = 'sn.beta.$i.dyn',
+/
+EOF
+	mpirun -np 4 ph.x < sn.beta.ph.$i.in > sn.beta.ph.$i.out
+	cp *.in *.out *.dyn* $MASTER_DIR
+	cd $MASTER_DIR
