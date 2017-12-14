@@ -1,0 +1,14 @@
+&input
+	asr = 'no',
+	flfrc = 'sn.beta.888.fc',
+	flfrq = 'sn.beta.dispersion.asr.crystal.no.freq',
+	q_in_band_form = .true.,
+	q_in_cryst_coord = .false.
+/
+6
+ 0.0 0.0 1.8807  40 ! M
+ 0 0 0 40 ! GM
+ 0.0 0.5 0.0 40 ! X
+ 0.5 0.5 0.0 40 ! M
+ 0 0 0 40 ! GM
+ 0.25 0.25 1.0142 1 ! P

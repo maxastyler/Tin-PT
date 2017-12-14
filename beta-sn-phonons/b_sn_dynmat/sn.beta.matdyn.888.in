@@ -1,0 +1,10 @@
+&input
+	asr = 'simple',
+	flfrc = 'sn.beta.888.fc',
+	flfrq = 'sn.beta.freq',
+	nk1 = 8,
+	nk2 = 8,
+	nk3 = 8,
+	dos = .true.,
+	fldos = 'sn.beta.888.dos',
+/

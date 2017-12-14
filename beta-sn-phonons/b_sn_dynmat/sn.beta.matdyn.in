@@ -1,0 +1,10 @@
+&input
+	asr = 'crystal',
+	flfrc = 'sn.beta.888.fc',
+	flfrq = 'sn.beta.freq',
+	nk1 = 30,
+	nk2 = 30,
+	nk3 = 30,
+	dos = .true.,
+	fldos = 'sn.beta.303030.dos',
+/
