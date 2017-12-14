@@ -1,0 +1,63 @@
+
+     Program Q2R v.6.1 (svn rev. 13369) starts on 14Dec2017 at  9:56:50 
+
+     This program is part of the open-source Quantum ESPRESSO suite
+     for quantum simulation of materials; please cite
+         "P. Giannozzi et al., J. Phys.:Condens. Matter 21 395502 (2009);
+          URL http://www.quantum-espresso.org", 
+     in publications or presentations arising from this work. More details at
+     http://www.quantum-espresso.org/quote
+
+     Parallel version (MPI), running on     1 processors
+
+     reading grid info from file sn.beta.dyn0    
+  reading force constants from file sn.beta.dyn1
+  Dielectric Tensor not found
+  nqs=            1
+ q=   0.00000000  0.00000000  0.00000000
+  reading force constants from file sn.beta.dyn2
+  nqs=            2
+ q=   0.00000000  0.00000000  0.47017404
+ q=   0.00000000  0.00000000 -0.47017404
+  reading force constants from file sn.beta.dyn3
+  nqs=            2
+ q=   0.00000000  0.00000000  0.94034808
+ q=   0.00000000  0.00000000 -0.94034808
+  reading force constants from file sn.beta.dyn4
+  nqs=            2
+ q=   0.00000000  0.00000000  1.41052212
+ q=   0.00000000  0.00000000 -1.41052212
+  reading force constants from file sn.beta.dyn5
+  nqs=            1
+ q=   0.00000000  0.00000000 -1.88069616
+  reading force constants from file sn.beta.dyn6
+  nqs=            8
+ q=   0.00000000  0.12677228 -0.23508702
+ q=   0.00000000 -0.12677228 -0.23508702
+ q=  -0.12677228  0.00000000 -0.23508702
+ q=   0.12677228  0.00000000 -0.23508702
+ q=   0.00000000  0.12677228  0.23508702
+ q=   0.00000000 -0.12677228  0.23508702
+ q=   0.12677228  0.00000000  0.23508702
+ q=  -0.12677228  0.00000000  0.23508702
+  reading force constants from file sn.beta.dyn7
+  nqs=            8
+ q=   0.00000000  0.12677228  0.70526106
+ q=   0.00000000 -0.12677228  0.70526106
+ q=  -0.12677228  0.00000000  0.70526106
+ q=   0.12677228  0.00000000  0.70526106
+ q=   0.00000000  0.12677228 -0.70526106
+ q=   0.00000000 -0.12677228 -0.70526106
+ q=   0.12677228  0.00000000 -0.70526106
+ q=  -0.12677228  0.00000000 -0.70526106
+  reading force constants from file sn.beta.dyn8
+  nqs=            8
+ q=   0.00000000  0.12677228  1.17543510
+ q=   0.00000000 -0.12677228  1.17543510
+ q=  -0.12677228  0.00000000  1.17543510
+ q=   0.12677228  0.00000000  1.17543510
+ q=   0.00000000  0.12677228 -1.17543510
+ q=   0.00000000 -0.12677228 -1.17543510
+ q=   0.12677228  0.00000000 -1.17543510
+ q=  -0.12677228  0.00000000 -1.17543510
+  reading force constants from file sn.beta.dyn9

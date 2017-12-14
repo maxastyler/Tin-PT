@@ -1,0 +1,5 @@
+&input
+fildyn='sn.beta.dyn',
+zasr = 'simple',
+flfrc = 'sn.beta.888.fc',
+/
