@@ -45,12 +45,34 @@ def get_electrons_energy(lat_string):
             if "!" in line: 
                 return float(line.split()[-2])
 
+def plot_electron_energy_pressure_difference(lats, lat_strings):
+    es = [get_electrons_energy(i) for i in lat_strings]
+    e_diffs = [abs(i - es[-1]) for i in es]
+    plt.subplot(121)
+    plt.title("Energy convergence vs ecutwfc")
+    plt.semilogy(lats, e_diffs) 
+    ps = [get_electrons_pressure(i) for i in lat_strings]
+    p_diffs = [abs(i - ps[-1]) for i in ps]
+    plt.subplot(122)
+    plt.title("Pressure convergence vs ecutwfc")
+    plt.semilogy(lats, p_diffs) 
+    plt.show()
+
 def load_closer_to_lat_param():
     lats = np.arange(10.32, 10.36, 0.001)
     lat_strings = []
     for i in lats:
         lat_strings.append("{lat:.3f}".format(lat=i))
     load_lats(lats, lat_strings)
+
+def get_electrons_pressure(lat_string):
+    with open("sn.alpha.{lat}/sn.alpha.scf.{lat}.out".format(lat=lat_string)) as f:
+        for line in f.readlines(): 
+            if "total   stress  (Ry/bohr**3)                   (kbar)" in line:
+                try:
+                    return float(line.split()[-1])
+                except:
+                    return float(line.split()[-1][2:])
 
 def load_more_spaced_out():
     lats = np.arange(10.2, 10.37, 0.01)
@@ -66,4 +88,4 @@ lats = np.arange(10, 90, 6)
 lat_strings = []
 for i in lats: 
     lat_strings.append("{lat:.0f}".format(lat=i))
-plot_electron_energy(lats, lat_strings)
+plot_electron_energy_pressure_difference(lats, lat_strings)

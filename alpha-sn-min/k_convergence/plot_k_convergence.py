@@ -47,5 +47,5 @@ def plot_either(k, colour, e_or_p):
 
 
 for k in ks:
-    plot_pressure(k)
+    plot_energy(k)
 plt.show()

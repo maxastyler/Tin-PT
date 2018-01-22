@@ -1,0 +1,10 @@
+&input
+	asr = 'simple',
+	flfrc = 'alpha-sn-k16-q8.fc',
+	flfrq = 'sn.alpha.161616.freq',
+	nk1 = 30,
+	nk2 = 30,
+	nk3 = 30,
+	dos = .true.,
+	fldos = 'sn.alpha.303030.simple.dos',
+/

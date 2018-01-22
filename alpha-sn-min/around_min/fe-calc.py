@@ -36,9 +36,13 @@ def load_lats(lats, lat_strings):
 
 def plot_electron_energy(lats, lat_strings):
     es = [get_electrons_energy(i) for i in lat_strings]
-    a=curve_fit(lambda x, a, b, c: a*(x-b)**2+c, lats, es)
+    parab = lambda x, a, b, c: a*(x-b)**2+c
+    a=curve_fit(parab, lats, es)
     print(a[0])
+    fit=[parab(i, a[0][0], a[0][1], a[0][2]) for i in lats]
     plt.plot(lats, es) 
+    plt.plot(lats, fit)
+    plt.title("Electron Energy vs Lattice Parameter in Alpha Tin with K=8, ecutwfc=50")
     plt.show()
 
 def get_electrons_energy(lat_string):
