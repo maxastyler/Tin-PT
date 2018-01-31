@@ -1,0 +1,10 @@
+&input
+   asr='simple',
+   flfrc='alpha-sn-k16-q8.fc', flfrq='offgrid.sn.alpha.12.56.freq', q_in_band_form=.true.,
+/
+5
+0.5 0.5 0.5 20 | L
+0 0 0 20 | GM
+0 1 0 20 | X
+1 1 0 40 | M
+0 0 0 1 | GM
